@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicine Bay - Community Pharmacy</title>
+<style>
+  :root {
+    --coral: #ef6a5a;
+    --coral-dark: #d84f3f;
+    --cream: #fff8f2;
+    --green: #4a9b7f;
+    --text: #33302e;
+    --muted: #8a8380;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', 'Segoe UI', serif; color: var(--text); background: var(--cream); line-height: 1.7; }
+  a { text-decoration: none; color: inherit; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: 'Segoe UI', Arial, sans-serif; }
+  .btn { display: inline-block; padding: 14px 32px; border-radius: 50px; font-weight: 700; font-family: 'Segoe UI', Arial, sans-serif; cursor: pointer; border: 2px solid transparent; transition: all .25s; font-size: 15px; }
+  .btn-coral { background: var(--coral); color: #fff; }
+  .btn-coral:hover { background: var(--coral-dark); }
+  .btn-line { border-color: var(--text); color: var(--text); }
+  .btn-line:hover { background: var(--text); color: #fff; }
+
+  header { padding: 24px 0; }
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'Segoe UI', Arial, sans-serif; font-size: 26px; font-weight: 800; }
+  .logo .bay { color: var(--coral); }
+  nav ul { display: flex; list-style: none; gap: 28px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: 600; font-size: 15px; }
+
+  .hero { padding: 50px 0 80px; text-align: center; }
+  .hero .kicker { font-family: 'Segoe UI', Arial, sans-serif; color: var(--green); font-weight: 700; text-transform: uppercase; font-size: 13px; letter-spacing: 2px; margin-bottom: 18px; }
+  .hero h1 { font-size: 52px; max-width: 680px; margin: 0 auto 22px; line-height: 1.25; }
+  .hero h1 em { color: var(--coral); font-style: normal; }
+  .hero p { font-family: 'Segoe UI', Arial, sans-serif; color: var(--muted); font-size: 17px; max-width: 520px; margin: 0 auto 34px; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; margin-bottom: 50px; }
+  .hero-blob { background: #fce9dd; border-radius: 40px; height: 300px; max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: var(--coral-dark); font-family: 'Segoe UI', Arial, sans-serif; font-weight: 700; }
+
+  .strip { background: var(--green); color: #fff; padding: 16px 0; font-family: 'Segoe UI', Arial, sans-serif; }
+  .strip-inner { display: flex; justify-content: space-around; font-size: 14px; font-weight: 600; flex-wrap: wrap; gap: 10px; }
+
+  .about { padding: 80px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .about-img { background: #fce9dd; border-radius: 24px; height: 320px; display: flex; align-items: center; justify-content: center; color: var(--coral-dark); font-family: 'Segoe UI', Arial, sans-serif; font-weight: 700; }
+  .about-text .kicker { font-family: 'Segoe UI', Arial, sans-serif; color: var(--coral); font-weight: 700; text-transform: uppercase; font-size: 13px; letter-spacing: 1.5px; margin-bottom: 14px; }
+  .about-text h2 { font-size: 32px; margin-bottom: 18px; }
+  .about-text p { color: var(--muted); margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; }
+  .checklist { list-style: none; font-family: 'Segoe UI', Arial, sans-serif; }
+  .checklist li { padding: 8px 0; font-weight: 600; font-size: 14.5px; }
+  .checklist li::before { content: "✓ "; color: var(--green); font-weight: 800; }
+
+  .offerings { background: #fff; padding: 80px 0; }
+  .section-title { text-align: center; margin-bottom: 50px; font-family: 'Segoe UI', Arial, sans-serif; }
+  .section-title .kicker { color: var(--coral); font-weight: 700; text-transform: uppercase; font-size: 13px; letter-spacing: 1.5px; margin-bottom: 10px; }
+  .section-title h2 { font-size: 32px; font-family: Georgia, serif; }
+  .offer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .offer-card { text-align: center; padding: 20px; }
+  .offer-circle { width: 90px; height: 90px; border-radius: 50%; background: var(--cream); border: 3px solid var(--coral); display: flex; align-items: center; justify-content: center; font-size: 34px; margin: 0 auto 20px; }
+  .offer-card h3 { font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin-bottom: 10px; }
+  .offer-card p { color: var(--muted); font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; }
+
+  .quote-band { padding: 70px 0; text-align: center; }
+  .quote-band blockquote { font-size: 26px; font-style: italic; max-width: 700px; margin: 0 auto 18px; color: var(--text); }
+  .quote-band cite { font-family: 'Segoe UI', Arial, sans-serif; font-weight: 700; color: var(--coral); font-style: normal; }
+
+  footer { background: var(--text); color: #d9d4d0; padding: 50px 0 24px; font-family: 'Segoe UI', Arial, sans-serif; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 30px; }
+  .footer-grid h4 { color: #fff; margin-bottom: 14px; font-size: 15px; }
+  .footer-grid ul { list-style: none; }
+  .footer-grid li { margin-bottom: 9px; font-size: 13.5px; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 20px; text-align: center; font-size: 12.5px; color: #a39d99; }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hero h1 { font-size: 36px; }
+    .about { grid-template-columns: 1fr; }
+    .offer-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .strip-inner { justify-content: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrap">
+    <div class="logo">Medicine<span class="bay">Bay</span></div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="btn btn-coral">Visit Us</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="kicker">Since Day One, With Care</div>
+    <h1>Your friendly neighborhood <em>pharmacy</em>, always close by</h1>
+    <p>At Medicine Bay, we believe good health starts with genuine care — real advice, real medicines, and a team that knows your name.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-coral">Browse Medicines</a>
+      <a href="#" class="btn btn-line">Find Our Store</a>
+    </div>
+    <div class="hero-blob">Friendly Pharmacy Photo</div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="container strip-inner">
+    <span>🏪 Family-Run Since 2009</span>
+    <span>🕒 Open Every Day 8am–10pm</span>
+    <span>🚲 Free Local Delivery</span>
+  </div>
+</div>
+
+<section class="about">
+  <div class="container" style="display:contents;">
+    <div class="about-img">Pharmacist Portrait</div>
+    <div class="about-text">
+      <div class="kicker">Why Medicine Bay</div>
+      <h2>Care that feels personal, every single time</h2>
+      <p>We're more than a pharmacy — we're part of the community. Our pharmacists take the time to listen, explain, and make sure you leave with exactly what you need.</p>
+      <ul class="checklist">
+        <li>Licensed pharmacists on-site daily</li>
+        <li>Free local delivery within 5km</li>
+        <li>Honest pricing, no hidden costs</li>
+        <li>Friendly, judgment-free consultations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="offerings">
+  <div class="container">
+    <div class="section-title">
+      <div class="kicker">What We Offer</div>
+      <h2>Everything for your family's health</h2>
+    </div>
+    <div class="offer-grid">
+      <div class="offer-card">
+        <div class="offer-circle">💊</div>
+        <h3>Prescription Medicines</h3>
+        <p>Fast, accurate dispensing with careful dosage checks.</p>
+      </div>
+      <div class="offer-card">
+        <div class="offer-circle">🌿</div>
+        <h3>Wellness & Supplements</h3>
+        <p>Vitamins, herbal remedies and everyday wellness picks.</p>
+      </div>
+      <div class="offer-card">
+        <div class="offer-circle">👶</div>
+        <h3>Baby & Family Care</h3>
+        <p>Trusted essentials for every stage of family life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-band">
+  <div class="container">
+    <blockquote>"Medicine Bay has looked after my family for over ten years — they always take the time to explain everything."</blockquote>
+    <cite>— A Grateful Neighbor</cite>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Medicine Bay</h4>
+        <p style="font-size:13.5px;">Your trusted community pharmacy, caring for families with honesty and warmth.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#">Products</a></li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>123 Main Street</li>
+          <li>+91 98765 43210</li>
+          <li>hello@medicinebay.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Medicine Bay. Made with care for our community.</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicine Bay - Pharmacy & Clinical Care</title>
+<style>
+  :root {
+    --blue: #1d4ed8;
+    --blue-light: #eaf0fe;
+    --dark: #0b1220;
+    --gray: #64748b;
+    --line: #e2e8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; color: var(--dark); background: #fff; line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .btn { display: inline-block; padding: 13px 30px; font-weight: 600; font-size: 14px; border-radius: 6px; cursor: pointer; border: none; transition: all .2s; }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-primary:hover { background: #1638a6; }
+  .btn-ghost { border: 1px solid var(--line); color: var(--dark); background: #fff; }
+
+  .topbar { background: var(--dark); color: #cbd5e1; font-size: 12px; padding: 8px 0; }
+  .topbar .container { display: flex; justify-content: space-between; }
+
+  header { border-bottom: 1px solid var(--line); }
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; max-width: 1180px; margin: 0 auto; }
+  .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+  .logo .plus { color: var(--blue); }
+  nav ul { display: flex; list-style: none; gap: 30px; font-size: 14px; font-weight: 500; }
+  nav a:hover { color: var(--blue); }
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+  .hero { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .hero-inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+  .hero-badge { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; letter-spacing: .5px; }
+  .hero h1 { font-size: 42px; line-height: 1.15; margin-bottom: 18px; font-weight: 800; }
+  .hero p { color: var(--gray); font-size: 16px; margin-bottom: 30px; max-width: 460px; }
+  .search-box { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 460px; }
+  .search-box input { flex: 1; border: none; padding: 14px 16px; font-size: 14px; outline: none; }
+  .search-box button { background: var(--blue); color: #fff; border: none; padding: 0 24px; font-weight: 600; cursor: pointer; }
+  .hero-visual { background: var(--blue-light); border-radius: 12px; height: 360px; display: flex; align-items: center; justify-content: center; color: var(--blue); font-weight: 700; font-size: 18px; border: 1px solid var(--line); }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--line); }
+  .stat { text-align: center; padding: 32px 16px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-size: 28px; font-weight: 800; color: var(--blue); }
+  .stat .label { font-size: 13px; color: var(--gray); margin-top: 4px; }
+
+  .services { padding: 70px 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+  .section-head h2 { font-size: 28px; font-weight: 800; }
+  .section-head p { color: var(--gray); font-size: 14px; margin-top: 6px; }
+  .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .service-item { padding: 30px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .service-item:nth-child(3n) { border-right: none; }
+  .service-item .num-badge { width: 36px; height: 36px; border-radius: 8px; background: var(--blue-light); color: var(--blue); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; margin-bottom: 14px; }
+  .service-item h3 { font-size: 17px; margin-bottom: 8px; font-weight: 700; }
+  .service-item p { color: var(--gray); font-size: 14px; }
+
+  .cta-band { background: var(--dark); color: #fff; padding: 56px 0; }
+  .cta-inner { display: flex; justify-content: space-between; align-items: center; }
+  .cta-inner h2 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  .cta-inner p { color: #94a3b8; font-size: 14px; }
+  .cta-inner .btn-primary { background: #fff; color: var(--dark); }
+
+  footer { padding: 50px 0 24px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+  .footer-grid h4 { font-size: 14px; margin-bottom: 14px; }
+  .footer-grid ul { list-style: none; }
+  .footer-grid li { margin-bottom: 9px; font-size: 13px; color: var(--gray); }
+  .footer-bottom { font-size: 12px; color: var(--gray); display: flex; justify-content: space-between; }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: repeat(2,1fr); }
+    .service-grid { grid-template-columns: 1fr; }
+    .service-item { border-right: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    nav ul { display: none; }
+    .cta-inner { flex-direction: column; text-align: center; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span>Licensed Pharmacy · Open 8am – 10pm</span>
+    <span>Call: +91 98765 43210</span>
+  </div>
+</div>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo">Medicine<span class="plus">Bay</span></div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Medicines</a></li>
+        <li><a href="#">Lab Tests</a></li>
+        <li><a href="#">Consult</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-ghost">Sign In</a>
+      <a href="#" class="btn btn-primary">Upload Rx</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="hero-badge">TRUSTED PHARMACY NETWORK</span>
+      <h1>Reliable Medicines. Real Pharmacists. Real Fast.</h1>
+      <p>Order prescription and over-the-counter medicines online, or walk into Medicine Bay for expert clinical guidance.</p>
+      <div class="search-box">
+        <input type="text" placeholder="Search medicines, brands, symptoms...">
+        <button>Search</button>
+      </div>
+    </div>
+    <div class="hero-visual">Clinical Product Visual</div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat"><div class="num">15+</div><div class="label">Years of Service</div></div>
+  <div class="stat"><div class="num">50k+</div><div class="label">Orders Delivered</div></div>
+  <div class="stat"><div class="num">200+</div><div class="label">Brands Stocked</div></div>
+  <div class="stat"><div class="num">24/7</div><div class="label">Pharmacist Support</div></div>
+</div>
+
+<section class="services">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Our Services</h2>
+        <p>Everything your health needs, under one roof</p>
+      </div>
+    </div>
+    <div class="service-grid">
+      <div class="service-item">
+        <div class="num-badge">01</div>
+        <h3>Prescription Fulfilment</h3>
+        <p>Upload your prescription and get medicines verified and dispatched by our pharmacists.</p>
+      </div>
+      <div class="service-item">
+        <div class="num-badge">02</div>
+        <h3>Lab Test Booking</h3>
+        <p>Book diagnostic tests with home sample collection at your convenience.</p>
+      </div>
+      <div class="service-item">
+        <div class="num-badge">03</div>
+        <h3>Teleconsultation</h3>
+        <p>Speak to a licensed pharmacist or doctor for quick health guidance.</p>
+      </div>
+      <div class="service-item">
+        <div class="num-badge">04</div>
+        <h3>Chronic Care Plans</h3>
+        <p>Monthly medicine subscriptions for long-term conditions, delivered on schedule.</p>
+      </div>
+      <div class="service-item">
+        <div class="num-badge">05</div>
+        <h3>Health Devices</h3>
+        <p>BP monitors, glucometers, nebulizers and other home healthcare equipment.</p>
+      </div>
+      <div class="service-item">
+        <div class="num-badge">06</div>
+        <h3>Wellness Products</h3>
+        <p>Vitamins, supplements and personal care essentials, curated for you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div>
+      <h2>Have a prescription ready?</h2>
+      <p>Upload it now and we'll have your medicines packed within the hour.</p>
+    </div>
+    <a href="#" class="btn btn-primary">Upload Prescription</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Medicine Bay</h4>
+        <p style="font-size:13px; color:var(--gray); max-width:280px;">A licensed pharmacy committed to accurate, affordable and fast healthcare for every household.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Licenses</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Medicine Bay. All rights reserved.</span>
+      <span>Drug License No. XXXXXXXXX</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

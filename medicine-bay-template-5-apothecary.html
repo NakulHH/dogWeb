@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicine Bay — Apothecary</title>
+<style>
+  :root {
+    --bg: #14100e;
+    --panel: #1c1611;
+    --burgundy: #6b1f2a;
+    --burgundy-light: #9c3444;
+    --gold: #c9a15a;
+    --gold-dim: #8a723f;
+    --cream: #e9dfc9;
+    --muted: #a89a86;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--cream);
+    line-height: 1.7;
+    background-image: radial-gradient(circle at 20% 20%, rgba(107,31,42,0.15), transparent 50%), radial-gradient(circle at 80% 80%, rgba(201,161,90,0.06), transparent 50%);
+  }
+  a { text-decoration: none; color: inherit; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3, .display { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
+
+  .btn { display: inline-block; padding: 14px 34px; font-family: Georgia, serif; font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border: 1px solid var(--gold); background: transparent; color: var(--gold); transition: all .25s; }
+  .btn:hover { background: var(--gold); color: var(--bg); }
+  .btn-solid { background: var(--burgundy); border-color: var(--burgundy); color: var(--cream); }
+  .btn-solid:hover { background: var(--burgundy-light); border-color: var(--burgundy-light); color: #fff; }
+
+  .ornament { text-align: center; color: var(--gold-dim); font-size: 20px; margin: 0 auto 20px; letter-spacing: 8px; }
+
+  header { border-bottom: 1px solid rgba(201,161,90,0.2); padding: 20px 0; }
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 24px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+  .logo span { color: var(--burgundy-light); }
+  nav ul { display: flex; list-style: none; gap: 34px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; }
+  nav a { color: var(--muted); transition: color .2s; }
+  nav a:hover { color: var(--gold); }
+
+  .hero { padding: 90px 0 80px; text-align: center; border-bottom: 1px solid rgba(201,161,90,0.15); }
+  .hero .est { color: var(--gold-dim); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 26px; }
+  .hero h1 { font-size: 56px; max-width: 760px; margin: 0 auto 24px; line-height: 1.25; font-weight: 700; color: var(--cream); }
+  .hero h1 em { color: var(--burgundy-light); font-style: italic; }
+  .hero p { color: var(--muted); font-size: 16px; max-width: 540px; margin: 0 auto 36px; }
+  .hero-btns { display: flex; gap: 18px; justify-content: center; }
+
+  .divider { border: none; border-top: 1px solid var(--gold-dim); width: 60px; margin: 40px auto; opacity: .5; }
+
+  .about { padding: 90px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+  .about-visual { border: 1px solid var(--gold-dim); background: var(--panel); height: 340px; display: flex; align-items: center; justify-content: center; color: var(--gold-dim); font-size: 15px; letter-spacing: 2px; text-transform: uppercase; position: relative; }
+  .about-visual::before, .about-visual::after { content: ""; position: absolute; width: 20px; height: 20px; border: 1px solid var(--gold-dim); }
+  .about-visual::before { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+  .about-visual::after { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+  .about-text .kicker { color: var(--burgundy-light); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+  .about-text h2 { font-size: 34px; margin-bottom: 20px; color: var(--cream); }
+  .about-text p { color: var(--muted); margin-bottom: 20px; font-size: 15.5px; }
+
+  .remedies { background: var(--panel); padding: 90px 0; border-top: 1px solid rgba(201,161,90,0.15); border-bottom: 1px solid rgba(201,161,90,0.15); }
+  .section-head { text-align: center; margin-bottom: 60px; }
+  .section-head .kicker { color: var(--burgundy-light); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+  .section-head h2 { font-size: 34px; color: var(--cream); }
+  .remedy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .remedy-card { text-align: center; }
+  .remedy-frame { width: 100px; height: 100px; margin: 0 auto 22px; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; color: var(--gold); background: radial-gradient(circle, rgba(201,161,90,0.08), transparent); }
+  .remedy-card h3 { font-size: 19px; margin-bottom: 12px; color: var(--cream); letter-spacing: .5px; }
+  .remedy-card p { color: var(--muted); font-size: 14px; }
+
+  .ledger { padding: 90px 0; }
+  .ledger-inner { border: 1px solid var(--gold-dim); padding: 50px; background: var(--panel); }
+  .ledger-row { display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px dashed rgba(201,161,90,0.25); font-size: 15px; }
+  .ledger-row:last-child { border-bottom: none; }
+  .ledger-row .item { color: var(--cream); }
+  .ledger-row .price { color: var(--gold); font-weight: 700; }
+  .ledger-row .note { color: var(--muted); font-size: 12.5px; display: block; margin-top: 4px; }
+
+  .quote-band { padding: 80px 0; text-align: center; border-top: 1px solid rgba(201,161,90,0.15); }
+  .quote-band blockquote { font-size: 28px; font-style: italic; max-width: 720px; margin: 0 auto 20px; color: var(--cream); }
+  .quote-band cite { color: var(--gold); font-style: normal; letter-spacing: 2px; text-transform: uppercase; font-size: 12px; }
+
+  footer { border-top: 1px solid rgba(201,161,90,0.15); padding: 50px 0 24px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 34px; }
+  .footer-grid h4 { color: var(--gold); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-grid ul { list-style: none; }
+  .footer-grid li { margin-bottom: 10px; font-size: 13.5px; color: var(--muted); }
+  .footer-bottom { text-align: center; border-top: 1px solid rgba(201,161,90,0.1); padding-top: 22px; font-size: 12px; color: var(--gold-dim); letter-spacing: 1px; }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hero h1 { font-size: 36px; }
+    .about { grid-template-columns: 1fr; }
+    .remedy-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .ledger-inner { padding: 30px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrap">
+    <div class="logo">Medicine<span>Bay</span></div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">The Apothecary</a></li>
+        <li><a href="#">Remedies</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="btn">Enquire</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="ornament">✦ ✦ ✦</div>
+    <div class="est">Established In Service Of The Neighborhood</div>
+    <h1>An old craft, practiced with <em>modern</em> precision</h1>
+    <p>Medicine Bay carries forward the apothecary's promise — careful hands, honest remedies, and counsel you can trust — for every ailment, great or small.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-solid">Enter the Apothecary</a>
+      <a href="#" class="btn">Consult a Pharmacist</a>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-visual">Apothecary Interior</div>
+  <div class="about-text">
+    <div class="kicker">Our Craft</div>
+    <h2>Where tradition meets the modern pharmacy</h2>
+    <p>Behind every shelf at Medicine Bay stands a licensed pharmacist trained in both the old discipline of the apothecary and the precision of modern medicine.</p>
+    <p>We measure, we verify, we counsel — nothing leaves our counter without care taken in its preparation.</p>
+    <a href="#" class="btn">Read Our Story</a>
+  </div>
+</section>
+
+<section class="remedies">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Our Offerings</div>
+      <h2>Remedies & Provisions</h2>
+    </div>
+    <div class="remedy-grid">
+      <div class="remedy-card">
+        <div class="remedy-frame">⚗</div>
+        <h3>Compounded Medicines</h3>
+        <p>Prescriptions prepared precisely to your physician's measure.</p>
+      </div>
+      <div class="remedy-card">
+        <div class="remedy-frame">🌿</div>
+        <h3>Herbal & Wellness</h3>
+        <p>Time-honored tinctures and supplements, quality-tested.</p>
+      </div>
+      <div class="remedy-card">
+        <div class="remedy-frame">🕯</div>
+        <h3>Private Consultation</h3>
+        <p>Quiet, unhurried counsel from a pharmacist who knows your case.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ledger">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">From The Counter</div>
+      <h2>This Week's Ledger</h2>
+    </div>
+    <div class="ledger-inner">
+      <div class="ledger-row">
+        <div><span class="item">Paracetamol Tablets, 500mg</span><span class="note">Pain & fever relief</span></div>
+        <div class="price">In Stock</div>
+      </div>
+      <div class="ledger-row">
+        <div><span class="item">Elderflower & Honey Tincture</span><span class="note">Cold season wellness</span></div>
+        <div class="price">In Stock</div>
+      </div>
+      <div class="ledger-row">
+        <div><span class="item">Digital Blood Pressure Monitor</span><span class="note">Home health device</span></div>
+        <div class="price">In Stock</div>
+      </div>
+      <div class="ledger-row">
+        <div><span class="item">Prenatal Vitamin Compound</span><span class="note">Mother & child care</span></div>
+        <div class="price">In Stock</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-band">
+  <div class="container">
+    <div class="ornament">✦</div>
+    <blockquote>"An apothecary is only as trustworthy as the hands that fill it. Ours have never wavered."</blockquote>
+    <cite>The Medicine Bay Promise</cite>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Medicine Bay</h4>
+        <p style="font-size:13.5px; color:var(--muted); max-width:280px;">A licensed apothecary-style pharmacy, carrying old-world care into modern healthcare.</p>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>123 Main Street</li>
+          <li>Open Daily, 8am – 10pm</li>
+          <li>+91 98765 43210</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Licenses</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 MEDICINE BAY — LICENSED PHARMACY — CRAFTED WITH CARE</div>
+  </div>
+</footer>
+
+</body>
+</html>
