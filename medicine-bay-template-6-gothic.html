@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicine Bay — Nocturne</title>
+<style>
+  :root {
+    --bg: #0a0708;
+    --panel: #130e0f;
+    --blood: #7a1420;
+    --blood-bright: #a8202f;
+    --gold: #b08d4f;
+    --cream: #d8cdb8;
+    --muted: #7a6f66;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--cream);
+    line-height: 1.7;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(122,20,32,0.12), transparent 60%);
+  }
+  a { text-decoration: none; color: inherit; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  .btn { display: inline-block; padding: 14px 34px; font-family: Georgia, serif; font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border: 1px solid var(--blood-bright); background: transparent; color: var(--cream); transition: all .3s; }
+  .btn:hover { background: var(--blood); border-color: var(--blood); box-shadow: 0 0 24px rgba(122,20,32,0.5); }
+  .btn-solid { background: var(--blood); border-color: var(--blood); }
+  .btn-solid:hover { background: var(--blood-bright); }
+
+  .sigil { text-align: center; color: var(--blood-bright); font-size: 22px; margin-bottom: 20px; letter-spacing: 10px; opacity: .8; }
+
+  header { border-bottom: 1px solid rgba(122,20,32,0.3); padding: 22px 0; }
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 24px; letter-spacing: 3px; text-transform: uppercase; color: var(--cream); }
+  .logo span { color: var(--blood-bright); }
+  nav ul { display: flex; list-style: none; gap: 34px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; }
+  nav a { color: var(--muted); transition: color .2s; }
+  nav a:hover { color: var(--blood-bright); }
+
+  .hero { padding: 100px 0 90px; text-align: center; border-bottom: 1px solid rgba(122,20,32,0.2); }
+  .hero .est { color: var(--gold); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px; opacity: .8; }
+  .hero h1 { font-size: 54px; max-width: 780px; margin: 0 auto 26px; line-height: 1.3; font-weight: 700; color: var(--cream); }
+  .hero h1 em { color: var(--blood-bright); font-style: italic; }
+  .hero p { color: var(--muted); font-size: 16px; max-width: 540px; margin: 0 auto 38px; }
+  .hero-btns { display: flex; gap: 18px; justify-content: center; }
+
+  .veil { padding: 90px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; border-bottom: 1px solid rgba(122,20,32,0.15); }
+  .veil-visual { border: 1px solid rgba(122,20,32,0.4); background: var(--panel); height: 340px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; position: relative; }
+  .veil-visual::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(176,141,79,0.3); }
+  .veil-text .kicker { color: var(--blood-bright); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+  .veil-text h2 { font-size: 34px; margin-bottom: 20px; color: var(--cream); }
+  .veil-text p { color: var(--muted); margin-bottom: 20px; font-size: 15.5px; }
+
+  .rites { padding: 90px 0; border-bottom: 1px solid rgba(122,20,32,0.15); }
+  .section-head { text-align: center; margin-bottom: 60px; }
+  .section-head .kicker { color: var(--blood-bright); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+  .section-head h2 { font-size: 34px; color: var(--cream); }
+  .rite-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(122,20,32,0.25); border: 1px solid rgba(122,20,32,0.25); }
+  .rite-card { background: var(--panel); padding: 36px 28px; text-align: center; }
+  .rite-frame { width: 70px; height: 70px; margin: 0 auto 20px; border: 1px solid var(--blood-bright); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--blood-bright); }
+  .rite-card h3 { font-size: 18px; margin-bottom: 12px; color: var(--cream); letter-spacing: .5px; }
+  .rite-card p { color: var(--muted); font-size: 14px; }
+
+  .tome { padding: 90px 0; text-align: center; }
+  .tome blockquote { font-size: 28px; font-style: italic; max-width: 720px; margin: 0 auto 20px; color: var(--cream); }
+  .tome cite { color: var(--gold); font-style: normal; letter-spacing: 2px; text-transform: uppercase; font-size: 12px; }
+
+  footer { border-top: 1px solid rgba(122,20,32,0.2); padding: 50px 0 24px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 34px; }
+  .footer-grid h4 { color: var(--blood-bright); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-grid ul { list-style: none; }
+  .footer-grid li { margin-bottom: 10px; font-size: 13.5px; color: var(--muted); }
+  .footer-bottom { text-align: center; border-top: 1px solid rgba(122,20,32,0.15); padding-top: 22px; font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hero h1 { font-size: 34px; }
+    .veil { grid-template-columns: 1fr; }
+    .rite-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrap">
+    <div class="logo">Medicine<span>Bay</span></div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Remedies</a></li>
+        <li><a href="#">The Apothecary</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="btn">Enter</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="sigil">✝</div>
+    <div class="est">Open After Dark · Every Night · Every Need</div>
+    <h1>Relief waits in the <em>quiet hours</em>, too</h1>
+    <p>Medicine Bay stands lit long after the rest of the street goes dark — a steady hand and a stocked shelf, whenever you need them.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-solid">Browse the Shelves</a>
+      <a href="#" class="btn">Speak to a Pharmacist</a>
+    </div>
+  </div>
+</section>
+
+<section class="veil">
+  <div class="container" style="display:contents;">
+    <div class="veil-visual">Candlelit Counter</div>
+    <div class="veil-text">
+      <div class="kicker">After Hours</div>
+      <h2>Care doesn't keep office hours — neither do we</h2>
+      <p>Whatever hour finds you in need, Medicine Bay's counter stays lit. Our night pharmacists are trained the same, held to the same standard, as anyone you'd meet at noon.</p>
+      <p>No emergency too small, no hour too late.</p>
+    </div>
+  </div>
+</section>
+
+<section class="rites">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">What We Keep</div>
+      <h2>Provisions For The Long Night</h2>
+    </div>
+    <div class="rite-grid">
+      <div class="rite-card">
+        <div class="rite-frame">🕯</div>
+        <h3>24-Hour Counter</h3>
+        <p>Open through the night for urgent needs, every day of the year.</p>
+      </div>
+      <div class="rite-card">
+        <div class="rite-frame">⚗</div>
+        <h3>Compounded Care</h3>
+        <p>Precise, verified prescriptions prepared on the spot.</p>
+      </div>
+      <div class="rite-card">
+        <div class="rite-frame">🗝</div>
+        <h3>Private Consultation</h3>
+        <p>Quiet counsel, discretion assured, for whatever you're carrying.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tome">
+  <div class="container">
+    <div class="sigil">✦</div>
+    <blockquote>"When the rest of the city sleeps, Medicine Bay keeps the lamp lit."</blockquote>
+    <cite>The Medicine Bay Vigil</cite>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Medicine Bay</h4>
+        <p style="font-size:13.5px; color:var(--muted); max-width:280px;">A licensed pharmacy keeping watch through the night, for whoever needs it.</p>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>123 Main Street</li>
+          <li>Open 24 Hours</li>
+          <li>+91 98765 43210</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Licenses</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 MEDICINE BAY — LICENSED PHARMACY</div>
+  </div>
+</footer>
+
+</body>
+</html>

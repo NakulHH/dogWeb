@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicine Bay // 2099</title>
+<style>
+  :root {
+    --bg: #0a0018;
+    --panel: #13082b;
+    --cyan: #00e5ff;
+    --magenta: #ff2ec4;
+    --purple: #7b2ff7;
+    --text: #e8e2f7;
+    --muted: #8b7fa8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(0,229,255,0.08), transparent 45%),
+      radial-gradient(circle at 85% 70%, rgba(255,46,196,0.08), transparent 45%);
+  }
+  a { text-decoration: none; color: inherit; }
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  .btn { display: inline-block; padding: 14px 30px; font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; border: 1px solid var(--cyan); background: transparent; color: var(--cyan); transition: all .2s; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
+  .btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 25px rgba(0,229,255,0.6); }
+  .btn-solid { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+  .btn-solid:hover { background: #ff5ed6; box-shadow: 0 0 25px rgba(255,46,196,0.6); }
+
+  header { border-bottom: 1px solid rgba(123,47,247,0.3); background: rgba(10,0,24,0.85); position: sticky; top: 0; backdrop-filter: blur(8px); z-index: 100; }
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; max-width: 1120px; margin: 0 auto; }
+  .logo { font-size: 20px; font-weight: 800; letter-spacing: 1px; }
+  .logo span { color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,0.7); }
+  nav ul { display: flex; list-style: none; gap: 30px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  nav a { color: var(--muted); transition: color .2s; }
+  nav a:hover { color: var(--magenta); }
+
+  .hero { padding: 90px 0 70px; position: relative; }
+  .hero-inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; }
+  .hero .tag { display: inline-block; color: var(--cyan); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(0,229,255,0.4); padding: 6px 16px; margin-bottom: 24px; }
+  .hero h1 { font-size: 44px; font-weight: 800; margin-bottom: 22px; line-height: 1.2; }
+  .hero h1 .glow { color: var(--magenta); text-shadow: 0 0 20px rgba(255,46,196,0.6); }
+  .hero p { color: var(--muted); font-size: 16px; max-width: 480px; margin-bottom: 32px; }
+  .hero-cta { display: flex; gap: 16px; }
+
+  .hud-panel { background: var(--panel); border: 1px solid rgba(0,229,255,0.3); padding: 26px; position: relative; }
+  .hud-panel::before { content: "SYS://MEDBAY_NETWORK"; position: absolute; top: -11px; left: 20px; background: var(--bg); padding: 0 10px; font-size: 11px; color: var(--cyan); letter-spacing: 1px; }
+  .hud-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(123,47,247,0.2); font-size: 13px; }
+  .hud-row:last-child { border-bottom: none; }
+  .hud-row .label { color: var(--muted); }
+  .hud-row .val { color: var(--cyan); font-weight: 700; }
+  .hud-row .val.mag { color: var(--magenta); }
+  .bar { height: 6px; background: rgba(255,255,255,0.08); margin-top: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--magenta)); }
+
+  .grid-section { padding: 70px 0; border-top: 1px solid rgba(123,47,247,0.2); }
+  .section-tag { color: var(--magenta); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 700; }
+  .section-title { font-size: 30px; margin-bottom: 44px; font-weight: 800; }
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .card { background: var(--panel); border: 1px solid rgba(0,229,255,0.15); padding: 28px 22px; transition: all .2s; }
+  .card:hover { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,229,255,0.15); transform: translateY(-4px); }
+  .card .idx { color: var(--purple); font-size: 12px; margin-bottom: 14px; font-weight: 700; }
+  .card h3 { font-size: 16px; margin-bottom: 10px; color: var(--cyan); }
+  .card p { color: var(--muted); font-size: 13px; }
+
+  .catalog { padding: 70px 0; border-top: 1px solid rgba(123,47,247,0.2); }
+  .table-wrap { border: 1px solid rgba(0,229,255,0.2); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; background: var(--panel); color: var(--cyan); padding: 14px 18px; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; border-bottom: 1px solid rgba(0,229,255,0.2); }
+  td { padding: 14px 18px; border-bottom: 1px solid rgba(123,47,247,0.15); color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(0,229,255,0.04); }
+  .tag-stock { color: var(--cyan); font-size: 11px; border: 1px solid rgba(0,229,255,0.4); padding: 2px 10px; }
+
+  .cta-band { padding: 80px 0; text-align: center; border-top: 1px solid rgba(123,47,247,0.2); }
+  .cta-band h2 { font-size: 30px; margin-bottom: 16px; font-weight: 800; }
+  .cta-band h2 .glow { color: var(--cyan); text-shadow: 0 0 18px rgba(0,229,255,0.6); }
+  .cta-band p { color: var(--muted); margin-bottom: 30px; font-size: 14px; }
+
+  footer { border-top: 1px solid rgba(123,47,247,0.2); padding: 40px 0 24px; font-size: 12px; color: var(--muted); }
+  .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-inner .cyan { color: var(--cyan); }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .hero h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo">MEDICINE<span>BAY</span></div>
+    <nav>
+      <ul>
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">CATALOG</a></li>
+        <li><a href="#">RX_UPLOAD</a></li>
+        <li><a href="#">CONTACT</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="btn btn-solid">ORDER NOW</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="tag">NEXT-GEN PHARMACY NETWORK</span>
+      <h1>Medicine, <span class="glow">reimagined</span> for a faster world</h1>
+      <p>Instant verification, drone-speed delivery, and a pharmacist network online around the clock. Welcome to healthcare that keeps pace with you.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-solid">Browse Catalog</a>
+        <a href="#" class="btn">Upload Prescription</a>
+      </div>
+    </div>
+    <div class="hud-panel">
+      <div class="hud-row"><span class="label">ORDER STATUS</span><span class="val mag">IN TRANSIT</span></div>
+      <div class="hud-row"><span class="label">RX VERIFICATION</span><span class="val">COMPLETE</span></div>
+      <div class="hud-row"><span class="label">ETA</span><span class="val">18 MIN</span></div>
+      <div class="hud-row">
+        <div style="width:100%;">
+          <span class="label">DELIVERY PROGRESS</span>
+          <div class="bar"><div class="bar-fill" style="width:72%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grid-section">
+  <div class="container">
+    <div class="section-tag">// CORE SYSTEMS</div>
+    <div class="section-title">Built for speed. Verified for safety.</div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="idx">01</div>
+        <h3>Real-Time Verify</h3>
+        <p>Prescriptions cross-checked instantly against licensed records.</p>
+      </div>
+      <div class="card">
+        <div class="idx">02</div>
+        <h3>Rapid Dispatch</h3>
+        <p>Automated fulfilment gets your order moving in minutes.</p>
+      </div>
+      <div class="card">
+        <div class="idx">03</div>
+        <h3>Live Tracking</h3>
+        <p>Watch your delivery move across the city in real time.</p>
+      </div>
+      <div class="card">
+        <div class="idx">04</div>
+        <h3>Encrypted Records</h3>
+        <p>Your health data secured end-to-end, always private.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="catalog">
+  <div class="container">
+    <div class="section-tag">// INVENTORY FEED</div>
+    <div class="section-title">Live Stock</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Item</th><th>Category</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0421</td><td>Paracetamol 500mg</td><td>Pain Relief</td><td><span class="tag-stock">AVAILABLE</span></td></tr>
+          <tr><td>0588</td><td>Cetirizine 10mg</td><td>Allergy</td><td><span class="tag-stock">AVAILABLE</span></td></tr>
+          <tr><td>0733</td><td>ORS Sachets</td><td>Hydration</td><td><span class="tag-stock">AVAILABLE</span></td></tr>
+          <tr><td>1140</td><td>Digital BP Monitor</td><td>Devices</td><td><span class="tag-stock">AVAILABLE</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Ready to <span class="glow">sync</span> your order?</h2>
+    <p>Upload your prescription and let the network handle the rest.</p>
+    <a href="#" class="btn btn-solid">Start Now</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <span><span class="cyan">MEDICINE BAY</span> © 2026 — Licensed Pharmacy Network</span>
+    <span>DRUG_LICENSE: XXXXXXXXX · PRIVACY · TERMS</span>
+  </div>
+</footer>
+
+</body>
+</html>
